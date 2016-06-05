@@ -57,21 +57,39 @@ module.exports = function(config) {
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     browsers: ['PhantomJS'],
-    //'Chrome'
+
+
+    // Use ChromeHidden to run tests on chrome while chrome window is hidden
+    customLaunchers: {
+        ChromeHidden: {
+            base: 'Chrome',
+            flags: ['--window-size=300,300', '--window-position=-9999,0']
+        }
+    },
+
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
     singleRun: false,
 
+
     // Concurrency level
     // how many browser should be started simultaneous
     concurrency: Infinity,
+
 
     browserify: {
         watch: true,
         debug: true,
         transform: [ 'brfs' ]
-    }
+    },
 
+
+    // assets dir can be used for loading of files and stuff
+    // by referencing to e.g. assets/sample1_tb.png in test code
+    // it will be loaded from http://localhost:8080/assets/sample1_tb.png
+    proxies: {
+        '/assets/': 'http://localhost:8080/assets/'
+    }
   })
 }
